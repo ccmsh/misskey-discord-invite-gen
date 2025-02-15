@@ -58,9 +58,21 @@ module.exports = {
       }
 
       const token = resp.data[0];
-      const replyMsg = token.expiresAt === null
-        ? `招待トークンは「${token.code}」です！ https://${MISSKEY_HOST} にアクセスして登録してください`
-        : `招待トークンは「${token.code}」です！${token.expiresAt}まで https://${MISSKEY_HOST} にアクセスして登録してください`;
+      const jpRole = interaction.member.roles.cache.some(role => role.name === 'JP');
+      const enRole = interaction.member.roles.cache.some(role => role.name === 'EN');
+      let replyMsg;
+
+      if (jpRole) {
+        replyMsg = token.expiresAt === null
+          ? `招待トークンは「${token.code}」です！ https://${MISSKEY_HOST} にアクセスして登録してください`
+          : `招待トークンは「${token.code}」です！${token.expiresAt}まで https://${MISSKEY_HOST} にアクセスして登録してください`;
+      } else if (enRole) {
+        replyMsg = token.expiresAt === null
+          ? `The invite token is "${token.code}"! Please visit https://${MISSKEY_HOST} to register.`
+          : `The invite token is "${token.code}"! Please visit https://${MISSKEY_HOST} to register by ${token.expiresAt}.`;
+      } else {
+        replyMsg = `招待トークンは「${token.code}」です！ https://${MISSKEY_HOST} にアクセスして登録してください`;
+      }
 
       await interaction.editReply({ content: replyMsg, ephemeral: true });
     } catch (error) {
