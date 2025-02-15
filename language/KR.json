@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "noPermission": "이 명령어를 실행할 권한이 없습니다.",
+    "alreadyExecuted": "이미 명령어를 실행했습니다.",
+    "error": "오류입니다!",
+    "settingsUpdated": "설정이 업데이트되었습니다.",
+    "inviteToken": "초대 토큰은 \"{token}\"입니다! https://{host} 에 접속하여 등록하세요. {expiresAt}까지 유효합니다."
+  },
+  "settings": {
+    "role": "KR"
+  }
+}

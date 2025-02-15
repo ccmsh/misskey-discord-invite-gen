@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "noPermission": "You do not have permission to execute this command.",
+    "alreadyExecuted": "You have already executed this command.",
+    "error": "An error occurred!",
+    "settingsUpdated": "Settings have been updated.",
+    "inviteToken": "The invite token is \"{token}\"! Please visit https://{host} to register by {expiresAt}."
+  },
+  "settings": {
+    "role": "822070550515548172"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "noPermission": "このコマンドを実行する権限がありません。",
+    "alreadyExecuted": "すでにコマンドを実行しました。",
+    "error": "エラーです！",
+    "settingsUpdated": "設定が更新されました。",
+    "inviteToken": "招待トークンは「{token}」です！ https://{host} にアクセスして登録してください。{expiresAt}まで有効です。"
+  },
+  "settings": {
+    "role": "JP"
+  }
+}

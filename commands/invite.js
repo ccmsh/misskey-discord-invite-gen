@@ -1,6 +1,9 @@
 require('dotenv').config();
 const { SlashCommandBuilder } = require("discord.js");
 const axios = require("axios");
+const { loadLanguage } = require('../language/languageLoader');
+const fs = require("fs");
+const path = require("path");
 
 const { MISSKEY_TOKEN, MISSKEY_HOST } = process.env;
 
@@ -21,16 +24,45 @@ const configSettings = {
   allowMultiple: false,
   allowedRoles: [], // 許可するロール
   moderatorRole: null, // モデレーターのロール
+  defaultLocale: 'EN', // デフォルト言語
 };
+
+const userConfigPath = path.join(__dirname, "../userConfig.json");
+
+function loadUserConfig() {
+  if (fs.existsSync(userConfigPath)) {
+    return JSON.parse(fs.readFileSync(userConfigPath, "utf8"));
+  } else {
+    return {};
+  }
+}
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("invite")
-    .setDescription("招待トークンを作成します"),
+    .setDescription("招待トークンを作成します / 초대 토큰을 생성합니다 / 生成邀请令牌"),
 
   async execute(interaction) {
     const userId = interaction.user.id;
     const allowMultiple = configSettings.allowMultiple;
+
+    const userRoles = interaction.member.roles.cache;
+    let locale = configSettings.defaultLocale || 'EN'; // Default to English
+
+    const userConfig = loadUserConfig();
+    if (userConfig[userId] && userConfig[userId].language) {
+      locale = userConfig[userId].language;
+    } else if (interaction.options.getString('force_locale')) {
+      locale = interaction.options.getString('force_locale');
+    } else if (userRoles.some(role => role.name === 'JP')) {
+      locale = 'JP';
+    } else if (userRoles.some(role => role.name === 'KR')) {
+      locale = 'KR';
+    } else if (userRoles.some(role => role.name === 'CN')) {
+      locale = 'CN';
+    }
+
+    const { messages, settings } = loadLanguage(locale);
 
     // 許可されたロールを持っているか確認
     const hasAllowedRole = configSettings.allowedRoles.length === 0 || configSettings.allowedRoles.some(role => 
@@ -41,7 +73,7 @@ module.exports = {
 
     if (!hasAllowedRole) {
       return await interaction.reply({ 
-        content: "このコマンドを実行する権限がありません。", 
+        content: messages.noPermission, 
         ephemeral: true 
       });
     }
@@ -49,7 +81,7 @@ module.exports = {
     // すでにコマンドを実行している場合はエフェメラルで通知して終了
     if (!allowMultiple && usedUsers.has(userId)) {
       return await interaction.reply({ 
-        content: "すでにコマンドを実行しました。", 
+        content: messages.alreadyExecuted, 
         ephemeral: true 
       });
     }
@@ -61,8 +93,6 @@ module.exports = {
 
     const expires = configSettings.expires;
     const expiresAt = expires ? new Date(Date.now() + expires * 60000).toISOString() : null;
-    const forceLocale = configSettings.forceLocale;
-    const useRoleId = configSettings.useRoleId;
 
     try {
       const resp = await axios.post(
@@ -80,27 +110,13 @@ module.exports = {
       }
 
       const token = resp.data[0];
-      let replyMsg;
+      let replyMsg = messages.inviteToken;
 
-      if (forceLocale === 'JP' || (!forceLocale && (useRoleId 
-          ? interaction.member.roles.cache.some(role => role.id === 'JP')
-          : interaction.member.roles.cache.some(role => role.name === 'JP')))) {
-        replyMsg = token.expiresAt === null
-          ? `招待トークンは「${token.code}」です！ https://${MISSKEY_HOST} にアクセスして登録してください`
-          : `招待トークンは「${token.code}」です！${token.expiresAt}まで https://${MISSKEY_HOST} にアクセスして登録してください`;
-      } else if (forceLocale === 'EN' || (!forceLocale && (useRoleId 
-          ? interaction.member.roles.cache.some(role => role.id === 'EN')
-          : interaction.member.roles.cache.some(role => role.name === 'EN')))) {
-        replyMsg = token.expiresAt === null
-          ? `The invite token is "${token.code}"! Please visit https://${MISSKEY_HOST} to register.`
-          : `The invite token is "${token.code}"! Please visit https://${MISSKEY_HOST} to register by ${token.expiresAt}.`;
-      } else {
-        replyMsg = `招待トークンは「${token.code}」です！ https://${MISSKEY_HOST} にアクセスして登録してください`;
-      }
+      replyMsg = replyMsg.replace('{token}', token.code).replace('{host}', MISSKEY_HOST).replace('{expiresAt}', token.expiresAt || '');
 
       await interaction.editReply({ content: replyMsg, ephemeral: true });
     } catch (error) {
-      await interaction.editReply({ content: "エラーです！", ephemeral: true });
+      await interaction.editReply({ content: messages.error, ephemeral: true });
       console.error("Error creating token:", error);
     }
   },
