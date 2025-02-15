@@ -1,5 +1,8 @@
 # Misskey Discord.js Invite Generator
 
+> [!CAUTION]
+> Misskey API requires the "manage invite codes" permission, and only administrators can apply this permission to the token.
+
 ## Overview
 This project is a bot that generates Misskey invite tokens using Discord.js. Users can generate invite tokens using the `/invite` command.
 
@@ -33,10 +36,16 @@ node index.js
 ```
 
 ### `/invite` Command
-Generates a Misskey invite token.
+Generates a Misskey invite token. The following options can be used:
+
+- `expires`: Expiration time of the token in minutes
+- `force_locale`: Force localization to use (JP/EN)
+- `use_role_id`: Determine by role ID
+- `allow_multiple`: Allow multiple tokens
+- `allowed_roles`: Comma-separated list of allowed roles
 
 ### `/config invite` Command
-Configures the invite token generation.
+Configures the invite token generation. The following options can be used:
 
 - `expires`: Expiration time of the token in minutes
 - `force_locale`: Force localization to use (JP/EN)
@@ -47,3 +56,4 @@ Configures the invite token generation.
 ## Notes
 - Ensure that the environment variables are set correctly.
 - Ensure that the Discord bot token is correct.
+- The Misskey API token requires the "manage invite codes" permission. Only administrators can grant this permission.
