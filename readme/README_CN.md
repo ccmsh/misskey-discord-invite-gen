@@ -1,4 +1,4 @@
-# Misskey Discord.js 邀请生成器
+# Misskey Discord.js 招待生成器
 
 > [!注意]
 > 如果 Misskey API 没有“管理邀请代码”权限，则此机器人无法工作。

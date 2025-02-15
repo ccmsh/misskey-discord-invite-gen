@@ -17,15 +17,15 @@ const usedUsers = new Set();
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("config")
-    .setDescription("Configuration commands / 설정 명령어 / 配置命令 / 設定コマンド")
+    .setDescription("Configuration commands / 設定コマンド")
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator) // 管理者権限を持っているユーザーのみ実行可能
     .addSubcommand(subcommand =>
       subcommand
         .setName("invite")
-        .setDescription("Create an invite token / 초대 토큰 생성 / 创建邀请令牌 / 招待トークンを作成します")
+        .setDescription("Create an invite token / 招待トークンを作成します")
         .addIntegerOption(option => 
           option.setName('expires')
-            .setDescription('Expiration time of the token in minutes / 토큰의 유효 기간 (분 단위) / 令牌的有效期（以分钟为单位） / トークンの有効期限（分単位）')
+            .setDescription('Expiration time of the token in minutes / トークンの有効期限（分単位）')
             .setRequired(false)
         )
         .addStringOption(option => 
@@ -35,27 +35,27 @@ module.exports = {
         )
         .addBooleanOption(option => 
           option.setName('use_role_id')
-            .setDescription('Determine localization by role ID or role name (JP/EN/KR/CN) / 로컬라이제이션을 역할 ID로 판단할지 역할 이름으로 판단할지 (JP/EN/KR/CN) / 通过角色 ID 或角色名称确定本地化 (JP/EN/KR/CN) / ローカライズをロールIDで判断するかロールの名前 (JP/EN/KR/CN) で判断するか')
+            .setDescription('Determine localization by role ID or role name (JP/EN/KR/CN)')
             .setRequired(false)
         )
         .addBooleanOption(option => 
           option.setName('allow_multiple')
-            .setDescription('Allow multiple tokens / 여러 개의 토큰을 발행할 수 있는지 여부 / 是否允许多个令牌 / 複数のトークンを発行できるかどうか')
+            .setDescription('Allow multiple tokens / 複数のトークンを発行できるかどうか')
             .setRequired(false)
         )
         .addStringOption(option => 
           option.setName('allowed_roles')
-            .setDescription('Comma-separated list of allowed roles / 허용된 역할의 쉼표로 구분된 목록 / 允许的角色的逗号分隔列表 / 許可されたロールのカンマ区切りリスト')
+            .setDescription('Comma-separated list of allowed roles / 許可されたロールのカンマ区切りリスト')
             .setRequired(false)
         )
         .addStringOption(option => 
           option.setName('moderator_role')
-            .setDescription('Role name for moderators / 모더레이터 역할 이름 / 版主角色名称 / モデレーターのロール名')
+            .setDescription('Role name for moderators / モデレーターのロール名')
             .setRequired(false)
         )
         .addStringOption(option => 
           option.setName('default_locale')
-            .setDescription('Default localization to use (JP/EN/KR/CN) / 기본 로컬라이제이션 (JP/EN/KR/CN) / 默认本地化 (JP/EN/KR/CN) / デフォルトのローカライズ (JP/EN/KR/CN)')
+            .setDescription('Default localization to use (JP/EN/KR/CN)')
             .setRequired(false)
         )
     ),
@@ -75,6 +75,8 @@ module.exports = {
         locale = 'KR';
       } else if (userRoles.some(role => role.id === 'CN')) {
         locale = 'CN';
+      } else {
+        locale = 'EN';
       }
     } else {
       if (userRoles.some(role => role.name === 'JP')) {
@@ -83,6 +85,8 @@ module.exports = {
         locale = 'KR';
       } else if (userRoles.some(role => role.name === 'CN')) {
         locale = 'CN';
+      } else {
+        locale = 'EN';
       }
     }
 

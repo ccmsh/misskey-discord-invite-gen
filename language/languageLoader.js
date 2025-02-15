@@ -2,6 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 function loadLanguage(locale) {
+  const supportedLocales = ['EN', 'JP', 'CN', 'KR'];
+  if (!supportedLocales.includes(locale)) {
+    locale = 'EN'; // Default to English if locale is not supported
+  }
   const filePath = path.join(__dirname, `${locale}.json`);
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));

@@ -40,7 +40,7 @@ function loadUserConfig() {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("invite")
-    .setDescription("招待トークンを作成します / 초대 토큰을 생성합니다 / 生成邀请令牌"),
+    .setDescription("Create an invite token / 招待トークンを作成します"),
 
   async execute(interaction) {
     const userId = interaction.user.id;
@@ -60,6 +60,8 @@ module.exports = {
       locale = 'KR';
     } else if (userRoles.some(role => role.name === 'CN')) {
       locale = 'CN';
+    } else {
+      locale = 'EN';
     }
 
     const { messages, settings } = loadLanguage(locale);
