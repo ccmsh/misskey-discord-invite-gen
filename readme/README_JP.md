@@ -1,7 +1,7 @@
-# Misskey Discord.js Invite Generator
+# Misskey Discord.js 招待生成ボット
 
-> [!CAUTION]
-> このBOTはMisskeyのAPIに「招待コードを操作する」権限がないと動きません
+> [!注意]
+> このBOTはMisskeyのAPIに「招待コードを操作する」権限がないと動きません。
 > APIに「招待コードを操作する」権限を適用できるのは管理者のみです。
 
 ## 概要
@@ -53,6 +53,18 @@ Misskey の招待トークンを生成します。以下のオプションを使
 - `use_role_id`: ローカライズをロールIDで判断するかロールの名前 (JP/EN) で判断するか
 - `allow_multiple`: 複数のトークンを発行できるかどうか
 - `allowed_roles`: 許可されたロールのカンマ区切りリスト
+- `moderator_role`: モデレーターのロール名
+
+### モデレーターの権限
+モデレーターは以下の操作を行うことができます：
+
+- `/config invite` コマンドを使用して招待トークン生成の設定を変更することができます。
+  - `expires`: トークンの有効期限（分単位）
+  - `force_locale`: 強制的に使用するローカライズ (JP/EN)
+  - `use_role_id`: ローカライズをロールIDで判断するかロールの名前 (JP/EN) で判断するか
+  - `allow_multiple`: 複数のトークンを発行できるかどうか
+  - `allowed_roles`: 許可されたロールのカンマ区切りリスト
+  - `moderator_role`: モデレーターのロール名
 
 ## 注意事項
 - 環境変数が正しく設定されていることを確認してください。

@@ -20,6 +20,7 @@ const configSettings = {
   useRoleId: false,
   allowMultiple: false,
   allowedRoles: [], // 許可するロール
+  moderatorRole: null, // モデレーターのロール
 };
 
 module.exports = {
