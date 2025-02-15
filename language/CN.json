@@ -4,7 +4,7 @@
     "alreadyExecuted": "您已经执行了此命令。",
     "error": "出错了！",
     "settingsUpdated": "设置已更新。",
-    "inviteToken": "邀请令牌是 \"{token}\"！请访问 https://{host} 进行注册。有效期至 {expiresAt}。"
+    "inviteToken": "邀请令牌是 \"`{token}`\"！请访问 https://{host} 进行注册。有效期至 {expiresAt}。"
   },
   "settings": {
     "role": "CN"
