@@ -30,7 +30,7 @@ module.exports = {
         )
         .addStringOption(option => 
           option.setName('force_locale')
-            .setDescription('Force localization to use (JP/EN/KR/CN) / 사용할 로컬라이제이션 강제 지정 (JP/EN/KR/CN) / 强制使用的本地化 (JP/EN/KR/CN) / 強制的に使用するローカライズ (JP/EN/KR/CN)')
+            .setDescription('Force localization to use (JP/EN/KR/CN)')
             .setRequired(false)
         )
         .addBooleanOption(option => 
