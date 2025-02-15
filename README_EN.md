@@ -40,7 +40,7 @@ Generates a Misskey invite token. The following options can be used:
 
 - `expires`: Expiration time of the token in minutes
 - `force_locale`: Force localization to use (JP/EN)
-- `use_role_id`: Determine by role ID
+- `use_role_id`: Determine localization by role ID or role name (JP/EN)
 - `allow_multiple`: Allow multiple tokens
 - `allowed_roles`: Comma-separated list of allowed roles
 
@@ -49,7 +49,7 @@ Configures the invite token generation. The following options can be used:
 
 - `expires`: Expiration time of the token in minutes
 - `force_locale`: Force localization to use (JP/EN)
-- `use_role_id`: Determine by role ID
+- `use_role_id`: Determine localization by role ID or role name (JP/EN)
 - `allow_multiple`: Allow multiple tokens
 - `allowed_roles`: Comma-separated list of allowed roles
 

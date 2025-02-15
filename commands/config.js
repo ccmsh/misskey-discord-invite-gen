@@ -33,7 +33,7 @@ module.exports = {
         )
         .addBooleanOption(option => 
           option.setName('use_role_id')
-            .setDescription('Determine by role ID / ロールIDで判断するかどうか')
+            .setDescription('Determine localization by role ID or role name (JP/EN) / ローカライズをロールIDで判断するかロールの名前 (JP/EN) で判断するか')
             .setRequired(false)
         )
         .addBooleanOption(option => 
